@@ -1,0 +1,21 @@
+.search {
+    margin: 0 auto;
+    max-width: 852px;
+    margin-top: 5rem;
+
+    h2 {
+        font-size: 24px;
+    }
+
+    form {
+        display: flex;
+
+        justify-content: stretch;
+
+        align-items: flex-start;
+
+        .form-group {
+            flex: 1 0 auto;
+        }
+    }
+}

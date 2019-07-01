@@ -1,0 +1,15 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
+}
+
+.mat-spinner {
+    display: none;
+}
+
+.mat-spinner.show {
+    display: block;
+}

@@ -1,0 +1,6 @@
+<mat-spinner [class.show]="loading$ | async" [diameter]="30" [strokeWidth]="3"></mat-spinner>
+
+<ng-container *ngIf="loaded$ | async">
+    <tdl-user-list [results]="results$ | async"></tdl-user-list>
+    <tdl-pagination [results]="results$ | async"></tdl-pagination>
+</ng-container>

@@ -1,0 +1,8 @@
+<div class="user-card">
+    <img class="mr-2" [src]="user.avatar_url" alt="@{{ user.login }}" width="48" height="48" />
+    <div>
+        <h1>
+            <a [href]="user.html_url">{{ user.login }}</a>
+        </h1>
+    </div>
+</div>

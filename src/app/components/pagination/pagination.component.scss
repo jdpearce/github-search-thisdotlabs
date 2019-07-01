@@ -1,0 +1,57 @@
+.pagination {
+    a {
+        background: #fff;
+        border: 1px solid #e1e4e8;
+        color: #0366d6;
+        cursor: pointer;
+        float: left;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 600;
+        margin-left: -1px;
+        padding: 7px 12px;
+        position: relative;
+        user-select: none;
+        vertical-align: middle;
+        white-space: nowrap;
+
+        &:hover {
+            background-color: #eff3f6;
+            border-color: #e1e4e8;
+            text-decoration: none;
+            z-index: 2;
+        }
+    }
+
+    em,
+    .gap {
+        background: #fff;
+        background-color: rgb(255, 255, 255);
+        border: 1px solid #e1e4e8;
+        color: #0366d6;
+        cursor: pointer;
+        float: left;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 600;
+        margin-left: -1px;
+        padding: 7px 12px;
+        position: relative;
+        user-select: none;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    .current {
+        background-color: #0366d6;
+        border-color: #0366d6;
+        color: #fff;
+        z-index: 3;
+    }
+
+    .gap {
+        background-color: #fafbfc;
+        color: #d1d5da;
+        cursor: default;
+    }
+}
