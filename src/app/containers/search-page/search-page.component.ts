@@ -5,9 +5,9 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { LoadingStatus } from 'src/app/core/models/loading-status';
 import { UserSearchResponsePage } from 'src/app/core/models/user-search-response';
-import { searchUsers } from 'src/app/store/search/search.actions';
-import { SearchFeatureState } from 'src/app/store/search/search.reducer';
-import { getResultsLoadingStatus, getResultsPage } from 'src/app/store/search/search.selectors';
+import { searchUsers, setSortOrder } from 'src/app/store/search/search.actions';
+import { SearchFeatureState, SortOrder } from 'src/app/store/search/search.reducer';
+import { getCurrentQuery, getResultsLoadingStatus, getResultsPage, getSortOrder } from 'src/app/store/search/search.selectors';
 
 @Component({
     selector: 'tdl-search-page',
@@ -18,6 +18,8 @@ export class SearchPageComponent implements OnInit {
     loading$: Observable<boolean>;
     loaded$: Observable<boolean>;
     results$: Observable<UserSearchResponsePage>;
+    query$: Observable<string>;
+    sortOrder$: Observable<string>;
 
     constructor(private route: ActivatedRoute, private router: Router, private store: Store<SearchFeatureState>) {}
 
@@ -45,5 +47,13 @@ export class SearchPageComponent implements OnInit {
         );
 
         this.results$ = this.store.pipe(select(getResultsPage));
+
+        this.query$ = this.store.pipe(select(getCurrentQuery));
+
+        this.sortOrder$ = this.store.pipe(select(getSortOrder));
+    }
+
+    changeSortOrder(sortOrder: SortOrder) {
+        this.store.dispatch(setSortOrder({ sortOrder }));
     }
 }

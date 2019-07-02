@@ -1,12 +1,10 @@
 <div class="pagination">
-    <a *ngIf="shouldShowPreviousLink" routerLink="/search-page" [queryParams]="{ q: results.query, page: +results.page_number - 1 }"
-        >Previous</a
-    >
+    <a *ngIf="shouldShowPreviousLink" routerLink="/search-page" [queryParams]="{ q: query, page: +results.page_number - 1 }">Previous</a>
     <ng-container *ngFor="let block of pageBlocks">
-        <a *ngIf="shouldShowLinkForBlock(block)" routerLink="/search-page" [queryParams]="{ q: results.query, page: block }">{{ block }}</a>
+        <a *ngIf="shouldShowLinkForBlock(block)" routerLink="/search-page" [queryParams]="{ q: query, page: block }">{{ block }}</a>
         <span *ngIf="shouldShowDisabledLinkForBlock(block)" class="gap">{{ block }}</span>
         <span *ngIf="block === 0" class="gap">...</span>
         <em *ngIf="block == results.page_number" class="current">{{ block }}</em>
     </ng-container>
-    <a *ngIf="shouldShowNextLink" routerLink="/search-page" [queryParams]="{ q: results.query, page: +results.page_number + 1 }">Next</a>
+    <a *ngIf="shouldShowNextLink" routerLink="/search-page" [queryParams]="{ q: query, page: +results.page_number + 1 }">Next</a>
 </div>

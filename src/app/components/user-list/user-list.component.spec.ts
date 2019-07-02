@@ -16,7 +16,6 @@ describe('UserListComponent', () => {
             page_count: 1,
             per_page: 30,
             page_number: 1,
-            query: 'Tom',
             incomplete_results: false,
             items: [
                 {

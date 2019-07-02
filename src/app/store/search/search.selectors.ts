@@ -13,7 +13,17 @@ export const getResultsPerPage = createSelector(
     state => state.resultsPerPage
 );
 
+export const getSortOrder = createSelector(
+    getSearchFeatureState,
+    state => state.sortOrder
+);
+
 export const getResultsLoadingStatus = createSelector(
     getSearchFeatureState,
     state => state.resultsLoadingStatus
+);
+
+export const getCurrentQuery = createSelector(
+    getSearchFeatureState,
+    state => state.query
 );

@@ -4,7 +4,6 @@ export interface UserSearchResponsePage {
     page_count: number;
     per_page: number;
     page_number: number;
-    query: string;
     items: UserInfo[];
 }
 

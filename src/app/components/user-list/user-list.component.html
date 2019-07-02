@@ -7,11 +7,20 @@
 
     <p>Displaying {{ this.pageStart | number }} to {{ this.pageEnd | number }}</p>
 
-    <tdl-pagination [results]="results"></tdl-pagination>
+    <mat-form-field>
+        <mat-label>Sorted by...</mat-label>
+        <mat-select [value]="sortOrder" (selectionChange)="onSortOrderChange($event)">
+            <mat-option *ngFor="let sortKey of sortOrderKeys" [value]="SortOrder[sortKey]">
+                {{ sortKey }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <tdl-pagination [results]="results" [query]="query"></tdl-pagination>
     <div class="results">
         <tdl-user-card class="m-2" *ngFor="let user of results.items" [user]="user"></tdl-user-card>
     </div>
-    <tdl-pagination [results]="results"></tdl-pagination>
+    <tdl-pagination [results]="results" [query]="query"></tdl-pagination>
 </ng-container>
 
 <ng-container *ngIf="results.total_count === 0">

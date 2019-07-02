@@ -1,15 +1,17 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
 import { UserSearchResponsePage } from 'src/app/core/models/user-search-response';
 
 @Component({
     selector: 'tdl-pagination',
     templateUrl: './pagination.component.html',
-    styleUrls: ['./pagination.component.scss']
+    styleUrls: ['./pagination.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PaginationComponent implements OnChanges {
     static readonly MAX_RESULTS: number = 1000;
 
     @Input() results: UserSearchResponsePage;
+    @Input() query: string;
 
     pageBlocks: number[] = [];
 
@@ -28,7 +30,6 @@ export class PaginationComponent implements OnChanges {
 
         // 1 2 3 [4] 5 6 7 ... 10 11
         if (this.results.page_number <= 5) {
-            console.log('');
             blocks.push(1, 2, 3, 4, 5, 6, 7, 0);
             blocks.push(this.results.page_count - 1, this.results.page_count);
             return blocks;

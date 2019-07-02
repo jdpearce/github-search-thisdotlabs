@@ -1,5 +1,10 @@
 <mat-spinner [class.show]="loading$ | async" [diameter]="30" [strokeWidth]="3"></mat-spinner>
 
 <ng-container *ngIf="loaded$ | async">
-    <tdl-user-list [results]="results$ | async"></tdl-user-list>
+    <tdl-user-list
+        [results]="results$ | async"
+        [query]="query$ | async"
+        [sortOrder]="sortOrder$ | async"
+        (changeSortOrder)="changeSortOrder($event)"
+    ></tdl-user-list>
 </ng-container>

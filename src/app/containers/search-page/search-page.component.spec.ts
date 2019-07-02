@@ -30,7 +30,7 @@ describe('SearchPageComponent', () => {
                 {
                     provide: ActivatedRoute,
                     useValue: {
-                        queryParams: of({ id: 123 })
+                        queryParams: of({ q: 'alice' })
                     }
                 }
             ]

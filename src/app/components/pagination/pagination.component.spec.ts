@@ -22,7 +22,6 @@ describe('PaginationComponent', () => {
             page_count: 7,
             per_page: 10,
             page_number: 1,
-            query: '',
             items: []
         };
 
