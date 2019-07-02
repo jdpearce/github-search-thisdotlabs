@@ -1,9 +1,11 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Store } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { cold } from 'jasmine-marbles';
+import { cold, hot } from 'jasmine-marbles';
 import { Observable, of, throwError } from 'rxjs';
 import { LoadingStatus } from 'src/app/core/models/loading-status';
 import { UserSearchResponsePage } from 'src/app/core/models/user-search-response';
@@ -15,11 +17,12 @@ import { initialSearchState, SortOrder } from './search.reducer';
 
 describe('Search Effects', () => {
     let effects: SearchEffects;
-    let actions: Observable<any>;
+    let actions$: Observable<any>;
     let store: MockStore<AppState>;
     let service: UsersSearchService;
     let mockResults: UserSearchResponsePage;
     let initialState: Partial<AppState>;
+    let router: Router;
 
     beforeEach(() => {
         mockResults = {
@@ -36,10 +39,11 @@ describe('Search Effects', () => {
         };
 
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [provideMockActions(() => actions), UsersSearchService, SearchEffects, provideMockStore({ initialState })]
+            imports: [HttpClientTestingModule, RouterTestingModule],
+            providers: [provideMockActions(() => actions$), UsersSearchService, SearchEffects, provideMockStore({ initialState })]
         });
 
+        router = TestBed.get(Router);
         effects = TestBed.get(SearchEffects);
         store = TestBed.get(Store);
         service = TestBed.get(UsersSearchService);
@@ -49,7 +53,7 @@ describe('Search Effects', () => {
         it('should emit a searchUsersSuccess action when the API returns', () => {
             const action = SearchActions.searchUsers({ query: 'alice', page_number: 1 });
             const source = cold('a', { a: action });
-            actions = source;
+            actions$ = source;
 
             spyOn(service, 'search').and.returnValue(of(mockResults));
 
@@ -64,7 +68,7 @@ describe('Search Effects', () => {
         it('should emit a searchUsersFailure action when the API fails', () => {
             const action = SearchActions.searchUsers({ query: 'alice', page_number: 1 });
             const source = cold('a', { a: action });
-            actions = source;
+            actions$ = source;
 
             const error = {};
             spyOn(service, 'search').and.returnValue(throwError(error));
@@ -79,8 +83,9 @@ describe('Search Effects', () => {
     });
 
     describe('setSortOrder$', () => {
-        it('should emit a searchUsers action with the current query on page 1', () => {
+        it('should navigate to first search page', () => {
             const query = 'alice';
+            spyOn(router, 'navigate');
 
             store.setState({
                 search: {
@@ -94,16 +99,11 @@ describe('Search Effects', () => {
             });
 
             const action = SearchActions.setSortOrder({ sortOrder: SortOrder.Followers });
-            const source = cold('a', { a: action });
-            actions = source;
+            const source = hot('a', { a: action });
+            actions$ = source;
 
-            const expected = cold('a', {
-                a: SearchActions.searchUsers({
-                    query,
-                    page_number: 1
-                })
-            });
-            expect(effects.setSortOrder$).toBeObservable(expected);
+            expect(effects.setSortOrder$).toBeObservable(cold('a', { a: [action, query] }));
+            expect(router.navigate).toHaveBeenCalledWith(['/search-page'], { queryParams: { q: query } });
         });
     });
 });
