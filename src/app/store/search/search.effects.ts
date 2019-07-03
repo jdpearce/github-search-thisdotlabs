@@ -34,8 +34,8 @@ export class SearchEffects {
             this.actions$.pipe(
                 ofType(SearchActions.setSortOrder),
                 withLatestFrom(this.store.pipe(select(getCurrentQuery))),
-                tap(([, query]) => {
-                    this.router.navigate(['/search-page'], { queryParams: { q: query } });
+                tap(([action, query]) => {
+                    this.router.navigate(['/search-page'], { queryParams: { q: query, sort: action.sortOrder } });
                 })
             ),
         { dispatch: false }

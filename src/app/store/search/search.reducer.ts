@@ -6,7 +6,7 @@ import { searchUsers, searchUsersFailure, searchUsersSuccess, setSortOrder } fro
 export enum SortOrder {
     Score = 'score',
     Followers = 'followers',
-    Respositories = 'repositories',
+    Repositories = 'repositories',
     Joined = 'joined'
 }
 

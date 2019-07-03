@@ -6,4 +6,4 @@ export const searchUsers = createAction('[Search] SearchUsers', props<{ query: s
 export const searchUsersSuccess = createAction('[Search] SearchUsersSuccess', props<{ results: UserSearchResponsePage }>());
 export const searchUsersFailure = createAction('[Search] SearchUsersFailure', props<{ error: any }>());
 
-export const setSortOrder = createAction('[Search] setSortOrder', props<{ sortOrder: SortOrder }>());
+export const setSortOrder = createAction('[Search] SetSortOrder', props<{ sortOrder: SortOrder }>());
