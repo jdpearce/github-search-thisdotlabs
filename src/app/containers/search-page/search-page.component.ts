@@ -31,7 +31,7 @@ export class SearchPageComponent implements OnInit {
                         this.router.navigate(['/search']);
                     }
 
-                    this.store.dispatch(searchUsers({ query: params.q, page_number: +(params.page || 1) }));
+                    this.store.dispatch(searchUsers({ query: params.q, page_number: params.page, sort_order: params.sort }));
                 })
             )
             .subscribe();

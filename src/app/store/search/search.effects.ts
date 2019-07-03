@@ -5,8 +5,8 @@ import { of } from 'rxjs';
 import { catchError, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { UsersSearchService } from 'src/app/core/services/user-search.service';
 import * as SearchActions from './search.actions';
-import { SearchFeatureState } from './search.reducer';
-import { getCurrentQuery, getResultsPerPage, getSortOrder } from './search.selectors';
+import { SearchFeatureState, SortOrder } from './search.reducer';
+import { getCurrentQuery, getResultsPerPage } from './search.selectors';
 
 export class SearchEffects {
     constructor(
@@ -19,12 +19,14 @@ export class SearchEffects {
     searchUsers$ = createEffect(() =>
         this.actions$.pipe(
             ofType(SearchActions.searchUsers),
-            withLatestFrom(this.store.pipe(select(getResultsPerPage)), this.store.pipe(select(getSortOrder))),
-            switchMap(([action, resultsPerPage, sortOrder]) =>
-                this.userSearchService.search(action.query, action.page_number, resultsPerPage, sortOrder).pipe(
-                    map(results => SearchActions.searchUsersSuccess({ results })),
-                    catchError(error => of(SearchActions.searchUsersFailure({ error })))
-                )
+            withLatestFrom(this.store.pipe(select(getResultsPerPage))),
+            switchMap(([action, resultsPerPage]) =>
+                this.userSearchService
+                    .search(action.query, +(action.page_number || 1), resultsPerPage, action.sort_order || SortOrder.Score)
+                    .pipe(
+                        map(results => SearchActions.searchUsersSuccess({ results })),
+                        catchError(error => of(SearchActions.searchUsersFailure({ error })))
+                    )
             )
         )
     );

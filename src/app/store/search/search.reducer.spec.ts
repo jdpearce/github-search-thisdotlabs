@@ -1,7 +1,7 @@
 import { LoadingStatus } from 'src/app/core/models/loading-status';
 import { UserSearchResponsePage } from 'src/app/core/models/user-search-response';
 import * as SearchActions from './search.actions';
-import { initialSearchState, SearchFeatureState, searchReducer } from './search.reducer';
+import { initialSearchState, SearchFeatureState, searchReducer, SortOrder } from './search.reducer';
 
 describe('searchReducer', () => {
     let state: SearchFeatureState;
@@ -23,7 +23,8 @@ describe('searchReducer', () => {
         const query = 'alice';
         const action = SearchActions.searchUsers({
             query,
-            page_number: 1
+            page_number: 1,
+            sort_order: SortOrder.Score
         });
 
         const actual = searchReducer(state, action);
@@ -33,11 +34,33 @@ describe('searchReducer', () => {
     it(`should set loading status on searchUsers`, () => {
         const action = SearchActions.searchUsers({
             query: 'alice',
-            page_number: 1
+            page_number: 1,
+            sort_order: SortOrder.Score
         });
 
         const actual = searchReducer(state, action);
         expect(actual.resultsLoadingStatus).toBe(LoadingStatus.Loading);
+    });
+
+    it(`should set sort order on searchUsers`, () => {
+        const action = SearchActions.searchUsers({
+            query: 'alice',
+            page_number: 1,
+            sort_order: SortOrder.Followers
+        });
+
+        const actual = searchReducer(state, action);
+        expect(actual.sortOrder).toBe(SortOrder.Followers);
+    });
+
+    it(`should default to Score sort order on searchUsers`, () => {
+        const action = SearchActions.searchUsers({
+            query: 'alice',
+            page_number: 1
+        });
+
+        const actual = searchReducer(state, action);
+        expect(actual.sortOrder).toBe(SortOrder.Score);
     });
 
     it(`should populate results on searchUsersSuccess`, () => {

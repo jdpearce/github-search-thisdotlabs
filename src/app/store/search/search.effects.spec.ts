@@ -51,7 +51,7 @@ describe('Search Effects', () => {
 
     describe('searchUsers$', () => {
         it('should emit a searchUsersSuccess action when the API returns', () => {
-            const action = SearchActions.searchUsers({ query: 'alice', page_number: 1 });
+            const action = SearchActions.searchUsers({ query: 'alice', page_number: 1, sort_order: SortOrder.Score });
             const source = cold('a', { a: action });
             actions$ = source;
 
@@ -66,7 +66,7 @@ describe('Search Effects', () => {
         });
 
         it('should emit a searchUsersFailure action when the API fails', () => {
-            const action = SearchActions.searchUsers({ query: 'alice', page_number: 1 });
+            const action = SearchActions.searchUsers({ query: 'alice', page_number: 1, sort_order: SortOrder.Score });
             const source = cold('a', { a: action });
             actions$ = source;
 
@@ -103,7 +103,7 @@ describe('Search Effects', () => {
             actions$ = source;
 
             expect(effects.setSortOrder$).toBeObservable(cold('a', { a: [action, query] }));
-            expect(router.navigate).toHaveBeenCalledWith(['/search-page'], { queryParams: { q: query } });
+            expect(router.navigate).toHaveBeenCalledWith(['/search-page'], { queryParams: { q: query, sort: SortOrder.Followers } });
         });
     });
 });

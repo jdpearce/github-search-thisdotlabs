@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
 import { UserSearchResponsePage } from 'src/app/core/models/user-search-response';
+import { SortOrder } from 'src/app/store/search/search.reducer';
 
 @Component({
     selector: 'tdl-pagination',
@@ -12,6 +13,7 @@ export class PaginationComponent implements OnChanges {
 
     @Input() results: UserSearchResponsePage;
     @Input() query: string;
+    @Input() sortOrder: SortOrder;
 
     pageBlocks: number[] = [];
 

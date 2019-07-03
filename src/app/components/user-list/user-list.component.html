@@ -16,11 +16,11 @@
         </mat-select>
     </mat-form-field>
 
-    <tdl-pagination [results]="results" [query]="query"></tdl-pagination>
+    <tdl-pagination [results]="results" [query]="query" [sortOrder]="sortOrder"></tdl-pagination>
     <div class="results">
         <tdl-user-card class="m-2" *ngFor="let user of results.items" [user]="user"></tdl-user-card>
     </div>
-    <tdl-pagination [results]="results" [query]="query"></tdl-pagination>
+    <tdl-pagination [results]="results" [query]="query" [sortOrder]="sortOrder"></tdl-pagination>
 </ng-container>
 
 <ng-container *ngIf="results.total_count === 0">
