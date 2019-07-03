@@ -2,6 +2,12 @@
     flex: 1 1 auto;
 }
 
+a:hover {
+    opacity: 0.75;
+    color: #fff;
+    text-decoration: none;
+}
+
 .octicon {
     color: #fff;
     fill: currentColor;
